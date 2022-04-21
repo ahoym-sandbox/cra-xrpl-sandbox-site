@@ -20,7 +20,7 @@ const handler: Handler = async (event: Event, context: Context) => {
   } catch (e) {
     return {
       statusCode: 500,
-      response: JSON.stringify({
+      body: JSON.stringify({
         error: 'Failed to create Xumm payload',
       }),
     };
