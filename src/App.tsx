@@ -5,6 +5,11 @@ import { XrplClientGenerator } from './components/XrplClientGenerator';
 import { XrplClientsList } from './components/XrplClientsList';
 import { xrplClient1, xrplClient2 } from './XrplSandbox/createClients';
 
+fetch('/.netlify/functions/test')
+  .then((response) => response.json())
+  .then((something) => console.log(something))
+  .catch((err) => console.error(err));
+
 // Can import and run TS scripts this way if so desired
 // import './XrplSandbox/scripts/sendXrp';
 // import './XrplSandbox/scripts/mintTransferableNft';
