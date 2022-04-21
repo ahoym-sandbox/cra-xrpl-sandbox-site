@@ -22,6 +22,7 @@ export const BridgeForm = () => {
     },
     [setSourceInfo]
   );
+  const [qrCode, setQrCode] = useState<string | void>();
   console.log('TEST LOG HERE', sourceInfo);
 
   const [destinationInfo, setDestinationInfo] = useState<DestinationFormInfo>({
@@ -74,6 +75,7 @@ export const BridgeForm = () => {
           console.log('Received response from xumm', response);
           const responseJson = await response.json();
           console.log('Actual responseJson', responseJson);
+          setQrCode(responseJson.refs.qr_png);
         } catch (e: unknown) {
           console.log('SOMETHING WENT WRONG!', e);
         }
@@ -93,6 +95,8 @@ export const BridgeForm = () => {
         />
         <button type="submit">Submit</button>
       </Flex>
+
+      {qrCode && <img alt="QR Code to sign transaction" src={qrCode} />}
     </FormLayout>
   );
 };
