@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { Context } from '@netlify/functions/dist/function/context';
 import { Event } from '@netlify/functions/dist/function/event';
+import { xrpToDrops } from 'xrpl';
 import { XummSdk } from 'xumm-sdk';
 
 console.log('TEST LOG HERE', process.env);
@@ -14,14 +15,15 @@ const handler: Handler = async (event: Event, context: Context) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const txJson = JSON.parse(event.body).txJson;
+  const request = JSON.parse(event.body).txJson;
+  const txJson = {
+    ...request,
+    Amount: xrpToDrops(request.Amount),
+  };
   let response;
 
   try {
-    console.log(
-      'Attempting to create xumm payload with',
-      JSON.stringify(txJson)
-    );
+    console.log('Attempting to create xumm payload with', txJson);
     response = await Sdk.payload.create(txJson);
   } catch (e) {
     console.log('Error creating xumm payload', e);
