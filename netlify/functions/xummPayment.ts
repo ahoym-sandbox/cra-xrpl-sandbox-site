@@ -16,8 +16,10 @@ const handler: Handler = async (event: Event, context: Context) => {
 
   return {
     statusCode: 200,
-    body: event.body,
-    randomStuff: pong,
+    body: JSON.stringify({
+      response: event.body,
+      pong,
+    }),
   };
 };
 
