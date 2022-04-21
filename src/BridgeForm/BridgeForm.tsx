@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { FormEvent, useCallback, useState } from 'react';
+import { convertStringToHex } from 'xrpl';
 import { DestinationInformation } from '../components/DestinationInformation';
 import { Flex } from '../components/layouts/Flex';
 import { SourceInformation } from '../components/SourceInformation';
@@ -45,12 +46,29 @@ export const BridgeForm = () => {
         };
         console.log('Final payload', payload);
 
+        const destinationAccountHex = convertStringToHex(
+          destinationInfo.destinationAddress
+        );
+
         fetch('/.netlify/functions/xummPayment', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(payload),
+          body: JSON.stringify({
+            txJson: {
+              TransactionType: 'Payment',
+              Destination: 'rfZQn3mEcLbVT6z6kGuh5wYMBdU9xbof6a', // Should be door account
+              Amount: payload.amount,
+              Memos: [
+                {
+                  Memo: {
+                    MemoData: destinationAccountHex,
+                  },
+                },
+              ],
+            },
+          }),
         })
           .then((response) => response.json())
           .then((response) => {

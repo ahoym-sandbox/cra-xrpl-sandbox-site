@@ -12,14 +12,23 @@ const handler: Handler = async (event: Event, context: Context) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const pong = await Sdk.ping();
+  const txJson = JSON.parse(event.body).txJson;
+  let response;
+
+  try {
+    response = await Sdk.payload.create(txJson);
+  } catch (e) {
+    return {
+      statusCode: 500,
+      response: JSON.stringify({
+        error: 'Failed to create Xumm payload',
+      }),
+    };
+  }
 
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      response: event.body,
-      pong,
-    }),
+    body: JSON.stringify(response),
   };
 };
 
