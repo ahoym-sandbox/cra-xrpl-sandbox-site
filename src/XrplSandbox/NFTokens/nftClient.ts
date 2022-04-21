@@ -32,7 +32,7 @@ export const mintTransferableNft = async (
     TransactionType: 'NFTokenMint',
     Account: wallet.address,
     Flags: NFTokenMintFlags.tfTransferable,
-    TokenTaxon: 0, // [To-Clarify] What is the practical use case of the TokenTaxon?
+    NFTokenTaxon: 0, // [To-Clarify] What is the practical use case of the TokenTaxon?
     /**
      * Issuer field also requires the AccountRoot to have the `MintAccount` field set to wallet.address.
      * This can be set through the {@link https://xrpl.org/accountset.html} AccountSet Tx.
@@ -76,7 +76,7 @@ export const burnNft = async (
   const burnNftTxPayload: NFTokenBurn = {
     TransactionType: 'NFTokenBurn',
     Account: wallet.address,
-    TokenID: tokenId,
+    NFTokenID: tokenId,
   };
 
   return client.submitAndWait(burnNftTxPayload, { wallet });
@@ -110,7 +110,7 @@ export const createNftSellOffer = async (
     TransactionType: 'NFTokenCreateOffer',
     Account: wallet.address,
     Amount: typeof amount === 'number' ? xrpToDrops(amount) : amount,
-    TokenID: tokenId,
+    NFTokenID: tokenId,
     Flags: NFTokenCreateOfferFlags.tfSellToken,
   };
 
@@ -160,7 +160,7 @@ export const createNftBuyOffer = async (
     Account: wallet.address,
     Amount: typeof amount === 'number' ? xrpToDrops(amount) : amount,
     Owner: owner,
-    TokenID: tokenId,
+    NFTokenID: tokenId,
   };
 
   // [To-Clarify] Is this field needed for buy offers?
@@ -215,7 +215,7 @@ export const cancelNftOffers = async (
   const cancelNftOffersPayload: NFTokenCancelOffer = {
     TransactionType: 'NFTokenCancelOffer',
     Account: wallet.address,
-    TokenOffers: tokenOfferIndices,
+    NFTokenOffers: tokenOfferIndices,
   };
 
   return client.submitAndWait(cancelNftOffersPayload, { wallet });
@@ -234,11 +234,11 @@ export const acceptNftSellOffer = async (
   const acceptNftSellOfferPayload: NFTokenAcceptOffer = {
     TransactionType: 'NFTokenAcceptOffer',
     Account: wallet.address,
-    SellOffer: offerIndex,
+    NFTokenSellOffer: offerIndex,
   };
 
   if (brokerFee) {
-    acceptNftSellOfferPayload.BrokerFee = brokerFee;
+    acceptNftSellOfferPayload.NFTokenBrokerFee = brokerFee;
   }
 
   return client.submitAndWait(acceptNftSellOfferPayload, { wallet });
@@ -257,11 +257,11 @@ export const acceptNftBuyOffer = async (
   const acceptNftBuyOfferPayload: NFTokenAcceptOffer = {
     TransactionType: 'NFTokenAcceptOffer',
     Account: wallet.address,
-    BuyOffer: offerIndex,
+    NFTokenBuyOffer: offerIndex,
   };
 
   if (brokerFee) {
-    acceptNftBuyOfferPayload.BrokerFee = brokerFee;
+    acceptNftBuyOfferPayload.NFTokenBrokerFee = brokerFee;
   }
 
   return client.submitAndWait(acceptNftBuyOfferPayload, { wallet });
