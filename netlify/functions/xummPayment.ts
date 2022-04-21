@@ -1,7 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { Context } from '@netlify/functions/dist/function/context';
 import { Event } from '@netlify/functions/dist/function/event';
-import { xrpToDrops } from 'xrpl';
 import { XummSdk } from 'xumm-sdk';
 
 console.log('TEST LOG HERE', process.env);
@@ -18,7 +17,7 @@ const handler: Handler = async (event: Event, context: Context) => {
   const request = JSON.parse(event.body).txJson;
   const txJson = {
     ...request,
-    Amount: xrpToDrops(request.Amount),
+    Amount: request.Amount,
   };
   let response;
 
