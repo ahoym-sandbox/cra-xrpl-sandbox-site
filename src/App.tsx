@@ -1,11 +1,10 @@
-// import { xrplClient1, xrplClient2 } from './XrplSandbox/createClients';
-// const generateWalletRequestOne = xrplClient1.generateWallet();
-// const generateWalletRequestTwo = xrplClient2.generateWallet();
-
 import styled from '@emotion/styled';
 import { BridgeForm } from './BridgeForm/BridgeForm';
 import { Flex } from './components/layouts/Flex';
 import { XummView } from './components/XummView';
+import { xrplClient1 } from './XrplSandbox/createClients';
+
+(window as any).xrplClient1 = xrplClient1.generateWallet();
 
 const Background = styled.div`
   background-color: #e8ecf0;
