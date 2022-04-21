@@ -5,11 +5,7 @@ import {
   TicketCreate,
   TrustSet,
 } from 'xrpl';
-import {
-  Amount,
-  IssuedCurrencyAmount,
-  SignerEntry,
-} from 'xrpl/dist/npm/models/common';
+import { IssuedCurrencyAmount, SignerEntry } from 'xrpl/dist/npm/models/common';
 import { StateRefProvider } from '../types';
 
 export const setSignerList = async (
