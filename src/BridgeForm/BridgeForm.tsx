@@ -54,7 +54,7 @@ export const BridgeForm = () => {
         })
           .then((response) => response.json())
           .then((response) => {
-            console.log('TEST LOG HERE', typeof response, response);
+            console.log('TEST LOG HERE', typeof response, JSON.parse(response));
             // console.log('TEST LOG HERE', typeof response, JSON.parse(response));
           })
           .catch((err) => console.log(err));
