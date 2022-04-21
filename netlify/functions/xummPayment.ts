@@ -8,6 +8,8 @@ console.log('TEST LOG HERE', process.env);
 const Sdk = new XummSdk(process.env.XUMM_API_KEY, process.env.XUMM_API_SECRET);
 
 const handler: Handler = async (event: Event, context: Context) => {
+  console.log('Hit xummPayment handler');
+
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -16,8 +18,14 @@ const handler: Handler = async (event: Event, context: Context) => {
   let response;
 
   try {
+    console.log(
+      'Attempting to create xumm payload with',
+      JSON.stringify(txJson)
+    );
     response = await Sdk.payload.create(txJson);
   } catch (e) {
+    console.log('Error creating xumm payload', e);
+
     return {
       statusCode: 500,
       body: JSON.stringify({
@@ -25,6 +33,7 @@ const handler: Handler = async (event: Event, context: Context) => {
       }),
     };
   }
+  console.log('Successfully created xumm payload');
 
   return {
     statusCode: 200,

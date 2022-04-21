@@ -38,7 +38,7 @@ export const BridgeForm = () => {
 
   return (
     <FormLayout
-      onSubmit={(e: FormEvent<HTMLFormElement>) => {
+      onSubmit={async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const payload = {
           ...sourceInfo,
@@ -50,32 +50,33 @@ export const BridgeForm = () => {
           destinationInfo.destinationAddress
         );
 
-        fetch('/.netlify/functions/xummPayment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            txJson: {
-              TransactionType: 'Payment',
-              Destination: 'rfZQn3mEcLbVT6z6kGuh5wYMBdU9xbof6a', // Should be door account
-              Amount: payload.amount,
-              Memos: [
-                {
-                  Memo: {
-                    MemoData: destinationAccountHex,
-                  },
-                },
-              ],
+        try {
+          const response = await fetch('/.netlify/functions/xummPayment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
             },
-          }),
-        })
-          .then((response) => response.json())
-          .then((response) => {
-            console.log('TEST LOG HERE', typeof response, JSON.parse(response));
-            // console.log('TEST LOG HERE', typeof response, JSON.parse(response));
-          })
-          .catch((err) => console.log(err));
+            body: JSON.stringify({
+              txJson: {
+                TransactionType: 'Payment',
+                Destination: 'rfZQn3mEcLbVT6z6kGuh5wYMBdU9xbof6a', // Should be door account
+                Amount: payload.amount,
+                Memos: [
+                  {
+                    Memo: {
+                      MemoData: destinationAccountHex,
+                    },
+                  },
+                ],
+              },
+            }),
+          });
+          console.log('Received response from xumm', response);
+          const responseJson = await response.json();
+          console.log('Actual responseJson', responseJson);
+        } catch (e: unknown) {
+          console.log('SOMETHING WENT WRONG!', e);
+        }
 
         // do some sort of translatePayloadToPayment(payload);
         // use network to find out which door account to use
