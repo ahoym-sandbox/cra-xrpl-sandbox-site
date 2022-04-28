@@ -6,6 +6,10 @@ import { DestinationInformation } from '../components/DestinationInformation';
 import { SourceInformation } from '../components/SourceInformation';
 import { DestinationFormInfo, SourceFormInfo } from '../types';
 
+const QrCodeImg = styled.img`
+  margin: 16px;
+`;
+
 const FormLayout = styled.form`
   height: 100%;
 `;
@@ -62,7 +66,7 @@ export const BridgeForm = () => {
 
         {qrCode && (
           <Grid container justifyContent="center">
-            <img alt="QR Code to sign transaction" src={qrCode} />
+            <QrCodeImg alt="QR Code to sign transaction" src={qrCode} />
           </Grid>
         )}
         <Grid container justifyContent="center">
