@@ -1,7 +1,14 @@
-import { Card } from './Card';
-import { Flex } from './layouts/Flex';
-import { TextInput } from './forms/TextInput';
+import styled from '@emotion/styled';
+import { Grid } from '@mui/material';
 import { DestinationFormInfo } from '../BridgeForm/types';
+import { Card } from './Card';
+import { TextInput } from './forms/TextInput';
+import { Flex } from './layouts/Flex';
+
+// TODO: sub-optimal, try to get rowSpacing to work
+const FieldRow = styled(Grid)`
+  margin-bottom: 16px;
+`;
 
 interface DestinationInformationProps {
   token: string;
@@ -14,16 +21,22 @@ export const DestinationInformation = (props: DestinationInformationProps) => {
 
   return (
     <Card>
-      <Flex>
-        <TextInput
-          placeholder="To Network"
-          onBlur={(event) => {
-            setDestinationInfo({ destinationNetwork: event.target.value });
-          }}
-        />
-        <TextInput placeholder="Token" value={token} disabled />
-        <TextInput placeholder="Amount" value={amount} disabled />
-      </Flex>
+      <FieldRow container spacing={2}>
+        <Grid item>
+          <TextInput
+            placeholder="To Network"
+            onBlur={(event) => {
+              setDestinationInfo({ destinationNetwork: event.target.value });
+            }}
+          />
+        </Grid>
+        <Grid item>
+          <TextInput placeholder="Token" value={token} disabled />
+        </Grid>
+        <Grid item>
+          <TextInput placeholder="Amount" value={amount} disabled />
+        </Grid>
+      </FieldRow>
       <Flex>
         <TextInput
           placeholder="To Address"

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { FormEvent, useCallback, useState } from 'react';
 import { convertStringToHex } from 'xrpl';
 import { DestinationInformation } from '../components/DestinationInformation';
@@ -98,7 +98,9 @@ export const BridgeForm = () => {
           token={sourceInfo.token}
           setDestinationInfo={partialSetDestinationInfo}
         />
-        <button type="submit">Submit</button>
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
       </Grid>
 
       {qrCode && <img alt="QR Code to sign transaction" src={qrCode} />}

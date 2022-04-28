@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
+import { Card as MuiCard } from '@mui/material';
 import { CSSProperties } from 'react';
 
 interface CardProps {
   borderRadius?: CSSProperties['borderRadius'];
 }
 
-export const Card = styled.div(
+export const Card = styled(MuiCard)(
   {
     backgroundColor: 'white',
     padding: '16px',
