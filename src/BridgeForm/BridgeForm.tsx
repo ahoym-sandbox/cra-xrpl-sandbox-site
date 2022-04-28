@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
+import { Grid } from '@mui/material';
 import { FormEvent, useCallback, useState } from 'react';
 import { convertStringToHex } from 'xrpl';
 import { DestinationInformation } from '../components/DestinationInformation';
-import { Flex } from '../components/layouts/Flex';
 import { SourceInformation } from '../components/SourceInformation';
 import { DestinationFormInfo, SourceFormInfo } from './types';
 
@@ -86,7 +86,12 @@ export const BridgeForm = () => {
         // send payment through xumm APIs
       }}
     >
-      <Flex flexDirection="column" height="100%" justifyContent="space-evenly">
+      <Grid
+        container
+        flexDirection="column"
+        height="100%"
+        justifyContent="space-evenly"
+      >
         <SourceInformation setSourceInfo={partialSetSourceInfo} />
         <DestinationInformation
           amount={sourceInfo.amount}
@@ -94,7 +99,7 @@ export const BridgeForm = () => {
           setDestinationInfo={partialSetDestinationInfo}
         />
         <button type="submit">Submit</button>
-      </Flex>
+      </Grid>
 
       {qrCode && <img alt="QR Code to sign transaction" src={qrCode} />}
     </FormLayout>

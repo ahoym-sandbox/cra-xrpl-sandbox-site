@@ -1,9 +1,13 @@
-import { Button, Grid, Typography } from '@mui/material';
-import { Card } from './Card';
+import styled from '@emotion/styled';
+import { Button, Card, Grid, Typography } from '@mui/material';
+
+const XummViewCard = styled(Card)`
+  padding: 16px;
+`;
 
 export const XummView = () => {
   return (
-    <Card borderRadius="16px">
+    <XummViewCard>
       <Grid container spacing={2} alignItems="center">
         <Grid item>
           <Typography variant="body1">Not Connected</Typography>
@@ -12,6 +16,6 @@ export const XummView = () => {
           <Button variant="contained">Connect Your Wallet</Button>
         </Grid>
       </Grid>
-    </Card>
+    </XummViewCard>
   );
 };

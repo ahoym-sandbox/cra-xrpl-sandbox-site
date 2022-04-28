@@ -1,20 +1,29 @@
 import styled from '@emotion/styled';
-import { Grid, Typography } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import { BridgeForm } from './BridgeForm/BridgeForm';
 import { XummView } from './components/XummView';
 import { xrplClient1 } from './XrplSandbox/createClients';
 
 (window as any).xrplClient1 = xrplClient1.generateWallet();
 
-const Background = styled(Grid)`
-  background-color: #e8ecf0;
+const Background = styled(Container)`
   height: 100vh;
+`;
+const HeaderSection = styled(Grid)`
+  height: 30vh;
+`;
+const BodySection = styled(Grid)`
+  height: 70vh;
 `;
 
 function App() {
   return (
-    <Background container justifyContent="center">
-      <Grid container alignItems="center" justifyContent="space-around">
+    <Background maxWidth="xl">
+      <HeaderSection
+        container
+        alignItems="center"
+        justifyContent="space-around"
+      >
         <Grid item xs={12} lg={3} />
         <Grid container item xs={6} justifyContent="center">
           <Grid item justifyContent="flex-end">
@@ -31,11 +40,11 @@ function App() {
             <XummView />
           </Grid>
         </Grid>
-      </Grid>
+      </HeaderSection>
 
-      <Grid container justifyContent="center">
+      <BodySection container justifyContent="center">
         <BridgeForm />
-      </Grid>
+      </BodySection>
     </Background>
   );
 }
