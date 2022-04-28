@@ -23,7 +23,7 @@ export const BridgeForm = () => {
     [setSourceInfo]
   );
   const [qrCode, setQrCode] = useState<string | void>();
-  console.log('TEST LOG HERE', sourceInfo);
+  console.log('sourceInfo object', sourceInfo);
 
   const [destinationInfo, setDestinationInfo] = useState<DestinationFormInfo>({
     destinationNetwork: '',
@@ -35,7 +35,7 @@ export const BridgeForm = () => {
     },
     [setDestinationInfo]
   );
-  console.log('TEST LOG HERE', destinationInfo);
+  console.log('destinationInfo', destinationInfo);
 
   return (
     <FormLayout
@@ -79,11 +79,6 @@ export const BridgeForm = () => {
         } catch (e: unknown) {
           console.log('SOMETHING WENT WRONG!', e);
         }
-
-        // do some sort of translatePayloadToPayment(payload);
-        // use network to find out which door account to use
-
-        // send payment through xumm APIs
       }}
     >
       <Grid
@@ -99,17 +94,15 @@ export const BridgeForm = () => {
           setDestinationInfo={partialSetDestinationInfo}
         />
 
-        <Grid container justifyContent="center">
-          {qrCode && (
-            <Grid item>
-              <img alt="QR Code to sign transaction" src={qrCode} />
-            </Grid>
-          )}
-          <Grid item>
-            <Button variant="contained" type="submit" size="large">
-              Submit
-            </Button>
+        {qrCode && (
+          <Grid container justifyContent="center">
+            <img alt="QR Code to sign transaction" src={qrCode} />
           </Grid>
+        )}
+        <Grid container justifyContent="center">
+          <Button variant="contained" type="submit" size="large">
+            Move Tokens
+          </Button>
         </Grid>
       </Grid>
     </FormLayout>
