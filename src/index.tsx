@@ -2,8 +2,6 @@ import { css, Global } from '@emotion/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { XrplClientsProvider } from './contexts/XrplClientsContext';
-import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,9 +12,7 @@ ReactDOM.render(
         }
       `}
     />
-    <XrplClientsProvider>
-      <App />
-    </XrplClientsProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
