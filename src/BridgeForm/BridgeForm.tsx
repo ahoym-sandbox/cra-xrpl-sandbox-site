@@ -98,12 +98,20 @@ export const BridgeForm = () => {
           token={sourceInfo.token}
           setDestinationInfo={partialSetDestinationInfo}
         />
-        <Button variant="contained" type="submit">
-          Submit
-        </Button>
-      </Grid>
 
-      {qrCode && <img alt="QR Code to sign transaction" src={qrCode} />}
+        <Grid container justifyContent="center">
+          {qrCode && (
+            <Grid item>
+              <img alt="QR Code to sign transaction" src={qrCode} />
+            </Grid>
+          )}
+          <Grid item>
+            <Button variant="contained" type="submit" size="large">
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
     </FormLayout>
   );
 };
