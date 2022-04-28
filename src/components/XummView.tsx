@@ -1,14 +1,17 @@
-import { Button } from './Button';
+import { Button, Grid, Typography } from '@mui/material';
 import { Card } from './Card';
-import { Flex } from './layouts/Flex';
 
 export const XummView = () => {
   return (
     <Card borderRadius="16px">
-      <Flex justifyContent="space-between">
-        <div>Not Connected</div>
-        <Button>Connect Your Wallet</Button>
-      </Flex>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item>
+          <Typography variant="body1">Not Connected</Typography>
+        </Grid>
+        <Grid item>
+          <Button variant="contained">Connect Your Wallet</Button>
+        </Grid>
+      </Grid>
     </Card>
   );
 };

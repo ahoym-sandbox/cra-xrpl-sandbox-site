@@ -1,49 +1,41 @@
 import styled from '@emotion/styled';
+import { Grid, Typography } from '@mui/material';
 import { BridgeForm } from './BridgeForm/BridgeForm';
-import { Flex } from './components/layouts/Flex';
 import { XummView } from './components/XummView';
 import { xrplClient1 } from './XrplSandbox/createClients';
 
 (window as any).xrplClient1 = xrplClient1.generateWallet();
 
-const Background = styled.div`
+const Background = styled(Grid)`
   background-color: #e8ecf0;
   height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-template-rows: 1fr 2fr 1fr;
-  grid-template-areas:
-    '. header header header actions'
-    '. main main main .';
-  padding: 1rem;
-`;
-
-const HeaderArea = styled.div`
-  grid-area: header;
-`;
-const ActionsArea = styled.div`
-  grid-area: actions;
-`;
-const MainArea = styled.div`
-  grid-area: main;
 `;
 
 function App() {
   return (
-    <Background>
-      <HeaderArea>
-        <Flex flexDirection="column">
-          <h1>XRPL Bridge</h1>
-          <p>Move and transfer tokens from one chain to another</p>
-        </Flex>
-      </HeaderArea>
-      <ActionsArea>
-        <XummView />
-      </ActionsArea>
+    <Background container justifyContent="center">
+      <Grid container alignItems="center" justifyContent="space-around">
+        <Grid item xs={12} lg={3} />
+        <Grid container item xs={6} justifyContent="center">
+          <Grid item justifyContent="flex-end">
+            <Typography variant="h2">XRPL Bridge</Typography>
+            <Typography variant="subtitle1">
+              Move and transfer tokens from one chain to another
+            </Typography>
+          </Grid>
+        </Grid>
 
-      <MainArea>
+        <Grid container item xs={12} lg={3} justifyContent="center">
+          <Grid item />
+          <Grid item>
+            <XummView />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid container justifyContent="center">
         <BridgeForm />
-      </MainArea>
+      </Grid>
     </Background>
   );
 }
