@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Grid } from '@mui/material';
-import { SourceFormInfo } from '../BridgeForm/types';
+import { SourceFormInfo } from '../types';
 import { Card } from './Card';
 import { TextInput } from './forms/TextInput';
 

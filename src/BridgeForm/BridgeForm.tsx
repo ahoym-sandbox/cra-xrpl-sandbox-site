@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { Button, Grid } from '@mui/material';
 import { FormEvent, useCallback, useState } from 'react';
-import { convertStringToHex } from 'xrpl';
+import { sendXummPayment } from '../api';
 import { DestinationInformation } from '../components/DestinationInformation';
 import { SourceInformation } from '../components/SourceInformation';
-import { DestinationFormInfo, SourceFormInfo } from './types';
+import { DestinationFormInfo, SourceFormInfo } from '../types';
 
 const FormLayout = styled.form`
   height: 100%;
@@ -41,44 +41,10 @@ export const BridgeForm = () => {
     <FormLayout
       onSubmit={async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const payload = {
-          ...sourceInfo,
-          ...destinationInfo,
-        };
+        const payload = { ...sourceInfo, ...destinationInfo };
         console.log('Final payload', payload);
-
-        const destinationAccountHex = convertStringToHex(
-          destinationInfo.destinationAddress
-        );
-
-        try {
-          const response = await fetch('/.netlify/functions/xummPayment', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              txJson: {
-                TransactionType: 'Payment',
-                Destination: 'rfZQn3mEcLbVT6z6kGuh5wYMBdU9xbof6a', // Should be door account
-                Amount: payload.amount,
-                Memos: [
-                  {
-                    Memo: {
-                      MemoData: destinationAccountHex,
-                    },
-                  },
-                ],
-              },
-            }),
-          });
-          console.log('Received response from xumm', response);
-          const responseJson = await response.json();
-          console.log('Actual responseJson', responseJson);
-          setQrCode(responseJson.refs.qr_png);
-        } catch (e: unknown) {
-          console.log('SOMETHING WENT WRONG!', e);
-        }
+        const responseJson = await sendXummPayment(payload);
+        setQrCode(responseJson.refs.qr_png);
       }}
     >
       <Grid
