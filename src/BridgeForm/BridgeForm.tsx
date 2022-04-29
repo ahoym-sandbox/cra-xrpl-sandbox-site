@@ -12,6 +12,11 @@ const QrCodeImg = styled.img`
   margin: 16px;
 `;
 
+const BodyRow = styled(Grid)({
+  item: true,
+  marginBottom: '32px',
+});
+
 export const BridgeForm = () => {
   const { isLoading, error, data, mutate } = useMutation(
     (payload: SourceFormInfo & DestinationFormInfo) => sendXummPayment(payload)
@@ -51,35 +56,41 @@ export const BridgeForm = () => {
       }}
     >
       <Grid container flexDirection="column" height="100%">
-        <Grid item marginBottom="32px">
+        <BodyRow>
           <SourceInformation setSourceInfo={partialSetSourceInfo} />
-        </Grid>
-        <Grid item marginBottom="32px">
+        </BodyRow>
+        <BodyRow>
           <DestinationInformation
             amount={sourceInfo.amount}
             token={sourceInfo.token}
             setDestinationInfo={partialSetDestinationInfo}
           />
-        </Grid>
+        </BodyRow>
 
-        <Grid item>
+        <Grid
+          item
+          container
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
           {data?.refs.qr_png && (
-            <Grid container justifyContent="center" marginBottom="32px">
+            <BodyRow>
               <QrCodeImg
                 alt="QR Code to sign transaction"
                 src={data.refs.qr_png}
               />
-            </Grid>
+            </BodyRow>
           )}
           {error && (
-            <Grid container justifyContent="center" marginBottom="32px">
+            <BodyRow>
               <Typography variant="body1">
                 An error occurred when creating the transaction for signing.
               </Typography>
-            </Grid>
+            </BodyRow>
           )}
 
-          <Grid container justifyContent="center">
+          <BodyRow>
             {isLoading ? (
               <Loading />
             ) : (
@@ -87,7 +98,7 @@ export const BridgeForm = () => {
                 Move Tokens
               </Button>
             )}
-          </Grid>
+          </BodyRow>
         </Grid>
       </Grid>
     </form>
