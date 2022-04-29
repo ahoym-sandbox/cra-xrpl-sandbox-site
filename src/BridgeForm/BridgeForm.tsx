@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import { Button, Grid } from '@mui/material';
 import { FormEvent, useCallback, useState } from 'react';
+import { useMutation } from 'react-query';
 import { sendXummPayment } from '../api';
 import { DestinationInformation } from '../components/DestinationInformation';
+import { Loading } from '../components/Loading';
 import { SourceInformation } from '../components/SourceInformation';
 import { DestinationFormInfo, SourceFormInfo } from '../types';
 
@@ -15,6 +17,9 @@ const FormLayout = styled.form`
 `;
 
 export const BridgeForm = () => {
+  const { isLoading, error, data, mutate } = useMutation(
+    (payload: SourceFormInfo & DestinationFormInfo) => sendXummPayment(payload)
+  );
   const [sourceInfo, setSourceInfo] = useState<SourceFormInfo>({
     token: '',
     amount: '0',
@@ -26,7 +31,6 @@ export const BridgeForm = () => {
     },
     [setSourceInfo]
   );
-  const [qrCode, setQrCode] = useState<string | void>();
   console.log('sourceInfo object', sourceInfo);
 
   const [destinationInfo, setDestinationInfo] = useState<DestinationFormInfo>({
@@ -43,12 +47,11 @@ export const BridgeForm = () => {
 
   return (
     <FormLayout
-      onSubmit={async (e: FormEvent<HTMLFormElement>) => {
+      onSubmit={(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const payload = { ...sourceInfo, ...destinationInfo };
         console.log('Final payload', payload);
-        const responseJson = await sendXummPayment(payload);
-        setQrCode(responseJson.refs.qr_png);
+        mutate(payload);
       }}
     >
       <Grid
@@ -65,15 +68,23 @@ export const BridgeForm = () => {
         />
 
         <Grid>
-          {qrCode && (
+          {data?.refs.qr_png && (
             <Grid container justifyContent="center">
-              <QrCodeImg alt="QR Code to sign transaction" src={qrCode} />
+              <QrCodeImg
+                alt="QR Code to sign transaction"
+                src={data.refs.qr_png}
+              />
             </Grid>
           )}
+
           <Grid container justifyContent="center">
-            <Button variant="contained" type="submit" size="large">
-              Move Tokens
-            </Button>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <Button variant="contained" type="submit" size="large">
+                Move Tokens
+              </Button>
+            )}
           </Grid>
         </Grid>
       </Grid>
