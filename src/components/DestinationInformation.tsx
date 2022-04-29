@@ -16,8 +16,16 @@ interface DestinationInformationProps {
   setDestinationInfo: (info: Partial<DestinationFormInfo>) => void;
 }
 
-export const DestinationInformation = (props: DestinationInformationProps) => {
-  const { amount, setDestinationInfo, token } = props;
+export const DestinationInformation = (
+  props: DestinationInformationProps & DestinationFormInfo
+) => {
+  const {
+    amount,
+    destinationAddress,
+    destinationNetwork,
+    setDestinationInfo,
+    token,
+  } = props;
 
   return (
     <Card>
@@ -25,7 +33,8 @@ export const DestinationInformation = (props: DestinationInformationProps) => {
         <Grid item>
           <TextInput
             placeholder="To Network"
-            onBlur={(event) => {
+            value={destinationNetwork}
+            onChange={(event) => {
               setDestinationInfo({ destinationNetwork: event.target.value });
             }}
           />
@@ -40,7 +49,8 @@ export const DestinationInformation = (props: DestinationInformationProps) => {
       <Flex>
         <TextInput
           placeholder="To Address"
-          onBlur={(event) => {
+          value={destinationAddress}
+          onChange={(event) => {
             setDestinationInfo({ destinationAddress: event.target.value });
           }}
         />

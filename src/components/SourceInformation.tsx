@@ -13,24 +13,28 @@ interface SourceInformationProps {
   setSourceInfo: (info: Partial<SourceFormInfo>) => void;
 }
 
-export const SourceInformation = ({
-  setSourceInfo,
-}: SourceInformationProps) => {
+export const SourceInformation = (
+  props: SourceInformationProps & SourceFormInfo
+) => {
+  const { amount, setSourceInfo, sourceAddress, sourceNetwork, token } = props;
+
   return (
     <Card>
       <FieldRow container spacing={2}>
         <Grid item>
           <TextInput
             placeholder="From Network"
-            onBlur={(event) => {
-              setSourceInfo({ token: event.target.value });
+            value={sourceNetwork}
+            onChange={(event) => {
+              setSourceInfo({ sourceNetwork: event.target.value });
             }}
           />
         </Grid>
         <Grid item>
           <TextInput
             placeholder="Token"
-            onBlur={(event) => {
+            value={token}
+            onChange={(event) => {
               setSourceInfo({ token: event.target.value });
             }}
           />
@@ -38,7 +42,8 @@ export const SourceInformation = ({
         <Grid item>
           <TextInput
             placeholder="Amount"
-            onBlur={(event) => {
+            value={amount}
+            onChange={(event) => {
               setSourceInfo({ amount: event.target.value });
             }}
           />
@@ -49,7 +54,8 @@ export const SourceInformation = ({
         <Grid item xs={12}>
           <TextInput
             placeholder="From Address"
-            onBlur={(event) => {
+            value={sourceAddress}
+            onChange={(event) => {
               setSourceInfo({ sourceAddress: event.target.value });
             }}
           />

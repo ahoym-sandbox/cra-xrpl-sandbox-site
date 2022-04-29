@@ -17,15 +17,23 @@ const BodyRow = styled(Grid)({
   marginBottom: '32px',
 });
 
+const DEFAULT_SOURCE_INFO = {
+  token: '',
+  amount: '0',
+  sourceAddress: '',
+  sourceNetwork: '',
+};
+const DEFAULT_DESTINATION_INFO = {
+  destinationNetwork: '',
+  destinationAddress: '',
+};
+
 export const BridgeForm = () => {
   const { isLoading, error, data, mutate } = useMutation(
     (payload: SourceFormInfo & DestinationFormInfo) => sendXummPayment(payload)
   );
-  const [sourceInfo, setSourceInfo] = useState<SourceFormInfo>({
-    token: '',
-    amount: '0',
-    sourceAddress: '',
-  });
+  const [sourceInfo, setSourceInfo] =
+    useState<SourceFormInfo>(DEFAULT_SOURCE_INFO);
   const partialSetSourceInfo = useCallback(
     (newState: Partial<SourceFormInfo>) => {
       setSourceInfo((oldState) => ({ ...oldState, ...newState }));
@@ -34,10 +42,9 @@ export const BridgeForm = () => {
   );
   console.log('sourceInfo object', sourceInfo);
 
-  const [destinationInfo, setDestinationInfo] = useState<DestinationFormInfo>({
-    destinationNetwork: '',
-    destinationAddress: '',
-  });
+  const [destinationInfo, setDestinationInfo] = useState<DestinationFormInfo>(
+    DEFAULT_DESTINATION_INFO
+  );
   const partialSetDestinationInfo = useCallback(
     (newState: Partial<DestinationFormInfo>) => {
       setDestinationInfo((oldState) => ({ ...oldState, ...newState }));
@@ -57,10 +64,14 @@ export const BridgeForm = () => {
     >
       <Grid container flexDirection="column" height="100%">
         <BodyRow>
-          <SourceInformation setSourceInfo={partialSetSourceInfo} />
+          <SourceInformation
+            {...sourceInfo}
+            setSourceInfo={partialSetSourceInfo}
+          />
         </BodyRow>
         <BodyRow>
           <DestinationInformation
+            {...destinationInfo}
             amount={sourceInfo.amount}
             token={sourceInfo.token}
             setDestinationInfo={partialSetDestinationInfo}
@@ -84,13 +95,31 @@ export const BridgeForm = () => {
             </BodyRow>
           )}
 
-          <BodyRow>
+          <BodyRow container justifyContent="space-between">
             {isLoading ? (
               <Loading />
             ) : (
-              <Button variant="contained" type="submit" size="large">
-                Move Tokens
-              </Button>
+              <>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  size="large"
+                  disabled={!!data?.refs.qr_png}
+                >
+                  Move Tokens
+                </Button>
+                <Button
+                  variant="outlined"
+                  type="button"
+                  size="large"
+                  onClick={() => {
+                    setSourceInfo(DEFAULT_SOURCE_INFO);
+                    setDestinationInfo(DEFAULT_DESTINATION_INFO);
+                  }}
+                >
+                  Reset Form
+                </Button>
+              </>
             )}
           </BodyRow>
         </Grid>
