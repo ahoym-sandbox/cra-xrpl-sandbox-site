@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { FormEvent, useCallback, useState } from 'react';
 import { useMutation } from 'react-query';
 import { sendXummPayment } from '../api';
@@ -10,10 +10,6 @@ import { DestinationFormInfo, SourceFormInfo } from '../types';
 
 const QrCodeImg = styled.img`
   margin: 16px;
-`;
-
-const FormLayout = styled.form`
-  height: 100%;
 `;
 
 export const BridgeForm = () => {
@@ -46,7 +42,7 @@ export const BridgeForm = () => {
   console.log('destinationInfo', destinationInfo);
 
   return (
-    <FormLayout
+    <form
       onSubmit={(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const payload = { ...sourceInfo, ...destinationInfo };
@@ -54,26 +50,32 @@ export const BridgeForm = () => {
         mutate(payload);
       }}
     >
-      <Grid
-        container
-        flexDirection="column"
-        height="100%"
-        justifyContent="space-evenly"
-      >
-        <SourceInformation setSourceInfo={partialSetSourceInfo} />
-        <DestinationInformation
-          amount={sourceInfo.amount}
-          token={sourceInfo.token}
-          setDestinationInfo={partialSetDestinationInfo}
-        />
+      <Grid container flexDirection="column" height="100%">
+        <Grid item marginBottom="32px">
+          <SourceInformation setSourceInfo={partialSetSourceInfo} />
+        </Grid>
+        <Grid item marginBottom="32px">
+          <DestinationInformation
+            amount={sourceInfo.amount}
+            token={sourceInfo.token}
+            setDestinationInfo={partialSetDestinationInfo}
+          />
+        </Grid>
 
-        <Grid>
+        <Grid item>
           {data?.refs.qr_png && (
-            <Grid container justifyContent="center">
+            <Grid container justifyContent="center" marginBottom="32px">
               <QrCodeImg
                 alt="QR Code to sign transaction"
                 src={data.refs.qr_png}
               />
+            </Grid>
+          )}
+          {error && (
+            <Grid container justifyContent="center" marginBottom="32px">
+              <Typography variant="body1">
+                An error occurred when creating the transaction for signing.
+              </Typography>
             </Grid>
           )}
 
@@ -88,6 +90,6 @@ export const BridgeForm = () => {
           </Grid>
         </Grid>
       </Grid>
-    </FormLayout>
+    </form>
   );
 };

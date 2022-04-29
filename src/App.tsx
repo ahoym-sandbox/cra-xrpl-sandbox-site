@@ -7,13 +7,14 @@ import { xrplClient1 } from './XrplSandbox/createClients';
 (window as any).xrplClient1 = xrplClient1.generateWallet();
 
 const Background = styled(Container)`
-  height: 100vh;
+  min-height: 100vh;
+  height: 768px;
 `;
 const HeaderSection = styled(Grid)`
-  height: 30vh;
+  height: 30%;
 `;
 const BodySection = styled(Grid)`
-  height: 70vh;
+  height: 70%;
 `;
 
 function App() {
