@@ -67,13 +67,7 @@ export const BridgeForm = () => {
           />
         </BodyRow>
 
-        <Grid
-          item
-          container
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-        >
+        <Grid item container flexDirection="column" alignItems="center">
           {data?.refs.qr_png && (
             <BodyRow>
               <QrCodeImg

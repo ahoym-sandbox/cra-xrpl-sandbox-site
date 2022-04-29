@@ -27,7 +27,7 @@ function App() {
       >
         <Grid item xs={12} lg={3} />
         <Grid container item xs={6} justifyContent="center">
-          <Grid item justifyContent="flex-end">
+          <Grid item container flexDirection="column" alignItems="center">
             <Typography variant="h2">XRPL Bridge</Typography>
             <Typography variant="subtitle1">
               Move and transfer tokens from one chain to another

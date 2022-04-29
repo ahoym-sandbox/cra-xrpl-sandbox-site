@@ -4,7 +4,7 @@ import { Card } from './Card';
 export const XummView = () => {
   return (
     <Card>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} alignItems="center" justifyContent="center">
         <Grid item>
           <Typography variant="body1">Not Connected</Typography>
         </Grid>
