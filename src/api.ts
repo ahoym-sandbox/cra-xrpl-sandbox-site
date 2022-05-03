@@ -3,10 +3,8 @@ import { DestinationFormInfo, SourceFormInfo } from './types';
 
 /**
  * The account on the source chain that has a corresponding door account at the destination chain.
- *
- * For now, this is just a hardcoded account address for a generated account on TESTNET.
  */
-const DOOR_ACCOUNT = 'rfZQn3mEcLbVT6z6kGuh5wYMBdU9xbof6a';
+const DOOR_ACCOUNT = 'r4xYSqujtY8pcEePcyoz5M1EtsnSWTAFGB';
 
 export async function sendXummPayment(
   payload: SourceFormInfo & DestinationFormInfo
